@@ -1,0 +1,8 @@
+{
+  "name": "Salary Management Tool",
+  "description": "High-performance enterprise compensation intelligence and staff directory manager for organizations scaling to 10,000+ employees.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
