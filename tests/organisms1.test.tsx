@@ -130,7 +130,6 @@ describe('Organisms - Modals & Header', () => {
     fireEvent.click(getByText('Salary Insights'));
     fireEvent.click(getByText('Employee Directory'));
     fireEvent.click(getByText('Design'));
-    fireEvent.click(getByText('TDD System'));
     fireEvent.click(getByText('Reset & Seed 10K Rows'));
   });
 

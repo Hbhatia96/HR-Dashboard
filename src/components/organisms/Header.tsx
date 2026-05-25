@@ -2,8 +2,8 @@ import React from 'react';
 import { Building, RefreshCw } from 'lucide-react';
 
 interface HeaderProps {
-  activeTab: 'dashboard' | 'directory' | 'architecture' | 'tdd';
-  setActiveTab: (tab: 'dashboard' | 'directory' | 'architecture' | 'tdd') => void;
+  activeTab: 'dashboard' | 'directory' | 'architecture';
+  setActiveTab: (tab: 'dashboard' | 'directory' | 'architecture') => void;
   isSeeding: boolean;
   handleRunSeeder: () => void;
 }
@@ -48,13 +48,6 @@ export function Header({ activeTab, setActiveTab, isSeeding, handleRunSeeder }: 
             id="tab-architecture"
           >
             Design
-          </button>
-          <button
-            onClick={() => setActiveTab('tdd')}
-            className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all duration-150 ${activeTab === 'tdd' ? 'bg-violet-600 text-white shadow-sm' : 'text-slate-300 hover:text-white hover:bg-slate-800'}`}
-            id="tab-tdd"
-          >
-            TDD System
           </button>
           
           <div className="h-6 w-[1px] bg-slate-700 mx-1 hidden sm:block"></div>

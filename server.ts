@@ -460,19 +460,6 @@ async function startServer() {
     }
   });
 
-  // H. Command Route for running tests (TDD System)
-  app.post('/api/tests/run', (req, res) => {
-    // Using NO_COLOR=1 to ensure plain text for the frontend
-    exec('NO_COLOR=1 npx vitest run --coverage', (error: any, stdout: string, stderr: string) => {
-      res.json({
-        success: !error,
-        stdout,
-        stderr,
-        error: error ? error.message : null
-      });
-    });
-  });
-
   // ==========================================
   // VITE & FRONTEND INTEGRATION
   // ==========================================

@@ -2,7 +2,6 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, fireEvent, act } from '@testing-library/react';
 import { DirectoryTab } from '../src/components/organisms/DirectoryTab';
 import { DashboardTab } from '../src/components/organisms/DashboardTab';
-import { TDDSystemTab } from '../src/components/organisms/TDDSystemTab';
 import { Provider } from 'react-redux';
 import { store } from '../src/store';
 
@@ -154,41 +153,6 @@ describe('Organisms - Complex Tabs', () => {
     );
     expect(getByText('No employees match this specific directory query.')).toBeDefined();
     fireEvent.click(getByText('Reset Directory Filters'));
-  });
-
-  it('TDDSystemTab renders and handles fetch', async () => {
-    global.fetch = vi.fn().mockResolvedValue({
-      headers: { get: () => 'application/json' },
-      json: () => Promise.resolve({ stdout: 'PASS src/app.test.js\nTests: 1 passed, 1 total\nAll files | 95.0', stderr: '', error: null })
-    });
-    
-    let renderResult: any;
-    await act(async () => {
-      renderResult = render(<TDDSystemTab />);
-    });
-    
-    await act(async () => {
-      fireEvent.click(renderResult.getByText('Run All Tests'));
-    });
-  });
-
-  it('TDDSystemTab renders and handles error fetch', async () => {
-    global.fetch = vi.fn().mockResolvedValue({
-      headers: { get: () => 'application/json' },
-      json: () => Promise.resolve({ stdout: '', stderr: '', error: 'Failed tests' })
-    });
-    await act(async () => {
-      render(<TDDSystemTab />);
-    });
-  });
-
-  it('TDDSystemTab handles invalid content type', async () => {
-    global.fetch = vi.fn().mockResolvedValue({
-      headers: { get: () => 'text/html' },
-    });
-    await act(async () => {
-      render(<TDDSystemTab />);
-    });
   });
 });
 

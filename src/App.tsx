@@ -20,10 +20,8 @@ import { useEmployees } from './hooks/useEmployees';
 import { useAppSeeder } from './hooks/useAppSeeder';
 import { useAppModals } from './hooks/useAppModals';
 
-import { TDDSystemTab } from './components/organisms/TDDSystemTab';
-
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'directory' | 'architecture' | 'tdd'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'directory' | 'architecture'>('dashboard');
 
   const {
     searchTerm, setSearchTerm, debouncedSearch,
@@ -172,8 +170,6 @@ export default function App() {
         )}
 
         {activeTab === 'architecture' && <ArchitectureTab />}
-        
-        {activeTab === 'tdd' && <TDDSystemTab />}
       </main>
 
       <footer className="bg-white border-t border-slate-200 py-6 mt-12 font-sans">
