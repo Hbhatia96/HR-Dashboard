@@ -68,7 +68,7 @@ async function initDatabase() {
     if (!countRow || countRow.total === 0) {
       console.log('Database empty on boot. Auto-seeding 10,000 employees...');
       const { runSeeder } = await import('./seed.ts');
-      
+
       await runSeeder();
       console.log('Seeder completed successfully.');
     } else {
@@ -477,7 +477,11 @@ async function startServer() {
   // VITE & FRONTEND INTEGRATION
   // ==========================================
 
-  if (process.env.NODE_ENV !== 'production') {
+  // Check if we are running the compiled CJS or running via TSX in dev
+  const isCompiled = process.argv[1]?.endsWith('server.cjs') || process.env.NODE_ENV === 'production';
+
+
+  if (!isCompiled) {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
@@ -486,8 +490,22 @@ async function startServer() {
   } else {
     // production static routing
     const distPath = path.join(process.cwd(), 'dist');
+    // Explicitly handle nested base paths (e.g. if built for GitHub pages with a base)
+    // It rewrites anything ending in /assets/... to just /assets/...
+    app.use((req, res, next) => {
+      const assetsMatch = req.url.match(/(\/assets\/.*)$/);
+      if (assetsMatch) {
+        req.url = assetsMatch[1];
+      }
+      next();
+    });
+
     app.use(express.static(distPath));
     app.get('*', (req, res) => {
+      // Prevent returning the HTML document for static asset requests to avoid MIME type errors
+      if (req.path.match(/\.(js|css|json|png|jpg|jpeg|svg|ico)$/i)) {
+        return res.status(404).send('Static asset not found');
+      }
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }
